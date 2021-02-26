@@ -1,0 +1,17 @@
+{
+  "name": "envoy-ext-authz-protoc-node-ts",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Guillaume Maka <guillaume.maka@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "protoc:generate": "node generate_protos.js"
+  },
+  "devDependencies": {
+    "ts-protoc-gen": "~0.14.0",
+    "rimraf": "^3.0.2",
+    "chalk": "~4.1.0",
+    "download-cli": "~1.1.1"
+  }
+}
