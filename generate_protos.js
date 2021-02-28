@@ -1,6 +1,7 @@
-const success = require('chalk').green
-const error = require('chalk').red
-const info = require('chalk').blue
+const success = require('chalk').green.bgGreen.white.bold
+const error = require('chalk').red.bgRedBright.white.bold
+const info = require('chalk').blue.bold
+const debug = require('chalk').yellowBright.bold
 const log = console.log
 
 const { execSync, spawnSync } = require('child_process')
@@ -63,7 +64,7 @@ log(
 
 const platform = supportedPlatforms[process.platform]
 const platformName = platform ? platform.name : `UNKNOWN:${process.platform}`
-log(info('You appear to be running on', platformName))
+log(info('ℹ️ You appear to be running on', platformName))
 
 requireBuild()
 
@@ -77,7 +78,7 @@ requireDir(generatedPath)
 
 log(
   info(
-    `Generating TypeScript definition from ${protoGlobPath} to ${generatedPath}...`
+    `ℹ️ Generating TypeScript definition from ${protoGlobPath} to ${generatedPath}...`
   )
 )
 
@@ -94,25 +95,28 @@ run(
 
 log(
   success(
-    `Generating TypeScript definition from ${protoGlobPath} to ${generatedPath}: [DONE]`
+    `✅ Generating TypeScript definition from ${protoGlobPath} to ${generatedPath}: [DONE]`
   )
 )
 
 run(rimrafPath, protocRoot)
 
 function requireBuild () {
-  log(info('Ensuring we have NPM packages installed...'))
+  log(info.bold('ℹ️ Ensuring we have NPM packages installed...'))
   run('yarn', 'install')
 }
 
 function requireProtoc () {
-  log(info('Checking existing local protoc binary...'))
+  log(info.bold('ℹ️ Checking existing local protoc binary...'))
   if (existsSync(protocLocalBinary)) {
-    log(info(`Using existing local protoc binary ${protocLocalBinary}!`))
+    log(info(`ℹ️ Using existing local protoc binary ${protocLocalBinary}!`))
     return
   }
 
   if (!platform) {
+    log(error('❌ Cannot download protoc. ' +
+    platformName +
+    ' is not currently supported by ts-protoc-gen'))
     throw new Error(
       'Cannot download protoc. ' +
         platformName +
@@ -120,10 +124,12 @@ function requireProtoc () {
     )
   }
 
-  log(info(`Downloading protoc v${protocVersion} for ${platform.name}`))
+  log(info(`+ Downloading protoc v${protocVersion} for ${platform.name}`))
   const protocUrl = `https://github.com/google/protobuf/releases/download/v${protocVersion}/protoc-${protocVersion}-${platform.downloadSuffix}.zip`
 
   run(downloadPath, '--extract', '--out', protocRoot, protocUrl)
+
+  log(success(`√ Downloaded protoc v${protocVersion} for ${platform.name}`))
 }
 
 function requireDir (path) {
@@ -135,14 +141,14 @@ function requireDir (path) {
 }
 
 function run (executablePath, ...args) {
-  log(info(`Running ${executablePath} ${args.join(' ')}`))
+  log(debug(`🛠 Running ${executablePath} ${args.join(' ')}`))
   const result = spawnSync(executablePath, args, {
     cwd: __dirname,
     shell: true,
     stdio: 'inherit'
   })
   if (result.status !== 0) {
-    log(error(`Exited ${executablePath} with status ${result.status}`))
+    log(error(`❌ Exited ${executablePath} with status ${result.status}`))
     throw new Error(`Exited ${executablePath} with status ${result.status}`)
   }
 }
