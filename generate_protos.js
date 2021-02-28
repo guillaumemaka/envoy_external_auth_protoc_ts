@@ -6,7 +6,7 @@ const log = console.log
 
 const { execSync, spawnSync } = require('child_process')
 
-const { existsSync, mkdirSync } = require('fs')
+const { existsSync, mkdirSync, writeFileSync } = require('fs')
 const { resolve, relative } = require('path')
 
 const protocVersion = '3.5.1'
@@ -99,6 +99,8 @@ log(
   )
 )
 
+createPackageJsonManifest()
+
 run(rimrafPath, protocRoot)
 
 function requireBuild () {
@@ -151,4 +153,21 @@ function run (executablePath, ...args) {
     log(error(`❌ Exited ${executablePath} with status ${result.status}`))
     throw new Error(`Exited ${executablePath} with status ${result.status}`)
   }
+}
+
+function createPackageJsonManifest () {
+  const manifestPath = resolve(generatedPath, 'package.json')
+  const manifest = {
+    name: 'my-protos',
+    version: '1.0.0',
+    description: '',
+    dependencies: {
+      '@types/google-protobuf': '^3.2.7',
+      'google-protobuf': '^3.8.0-rc.1'
+    }
+  }
+
+  log(info('Creating manifest'))
+  writeFileSync(manifestPath, JSON.stringify(manifest), { encoding: 'utf-8' })
+  log(success('Manifest created!'))
 }
