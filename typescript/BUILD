@@ -5,9 +5,10 @@ load("@npm//@bazel/typescript:index.bzl", "ts_library")
 
 package(default_visibility = ["//visibility:private"])
 
+
 js_grpc_node_library(
     name = "envoyproxy_external_auth_js",
-    deps = ["@com_envoyproxy//api/envoy/service/auth/v3:pkg"],
+    deps = ["@envoy_api//envoy/service/auth/v3:pkg"],
 )
 
 ts_library(
@@ -19,7 +20,8 @@ ts_library(
         ":envoyproxy_external_auth_js",
         "@npm//@grpc/grpc-js",
     ],
-    module_name= "@envoy/authz-grpc"
+    module_name= "@envoy/authz-grpc",
+    tsconfig = ":tsconfig.json",
 )
 
 nodejs_test(

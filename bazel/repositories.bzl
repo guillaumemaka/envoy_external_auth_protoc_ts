@@ -20,7 +20,7 @@ def api_dependencies():
         name = "com_envoyproxy_protoc_gen_validate",
     )
     external_http_archive(
-        name = "com_envoyproxy",
+        name = "com_github_envoyproxy_envoy",
     )
     external_http_archive(
         name = "com_google_googleapis",
@@ -43,13 +43,16 @@ def api_dependencies():
         name = "rules_proto_grpc",
     )
     external_http_archive(
+        name = "io_bazel_rules_go",
+    )
+    external_http_archive(
         name = "com_github_openzipkin_zipkinapi",
         build_file_content = ZIPKINAPI_BUILD_CONTENT,
     )
-    # external_http_archive(
-    #     name = "opentelemetry_proto",
-    #     build_file_content = OPENTELEMETRY_LOGS_BUILD_CONTENT,
-    # )
+    external_http_archive(
+        name = "opentelemetry_proto",
+        build_file_content = OPENTELEMETRY_LOGS_BUILD_CONTENT,
+    )
 
 PROMETHEUSMETRICS_BUILD_CONTENT = """
 load("@envoy//bazel:api_build_system.bzl", "api_cc_py_proto_library")
