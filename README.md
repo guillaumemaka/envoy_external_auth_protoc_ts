@@ -2,16 +2,12 @@
 
 This repo is an attempt of generate Typescript Definition of the envoy gRPC external auth service [https://github.com/envoyproxy/envoy/blob/main/api/envoy/service/auth/v3/external_auth.proto](https://github.com/envoyproxy/envoy/blob/main/api/envoy/service/auth/v3/external_auth.proto)
 
-# Install deps
-
-```console
-yarn
-```
+# Install bazel
 
 # Run 
 
 ```console
-yarn protoc:generate
+bazel build //typescript:main_ts
 ```
 
 This repo use [protoc-gen-ts](https://github.com/improbable-eng/ts-protoc-gen) plugin.
@@ -26,3 +22,4 @@ All the proto files come from
 - udpa: [https://github.com/cncf/udpa](https://github.com/cncf/udpa)
 - envoy: [https://github.com/envoyproxy/envoy](https://github.com/envoyproxy/envoy)
 - googleapis: [https://github.com/googleapis/googleapis](https://github.com/googleapis/googleapis)
+- rules_proto_grpc: [https://github.com/rules-proto-grpc/rules_proto_grpc](https://github.com/rules-proto-grpc/rules_proto_grpc)
