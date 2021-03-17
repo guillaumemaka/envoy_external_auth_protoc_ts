@@ -39,3 +39,17 @@ EXTERNAL_PROTO_PY_BAZEL_DEP_MAP = {
     "@opencensus_proto//opencensus/proto/trace/v1:trace_proto": "@opencensus_proto//opencensus/proto/trace/v1:trace_proto_py",
     "@opencensus_proto//opencensus/proto/trace/v1:trace_config_proto": "@opencensus_proto//opencensus/proto/trace/v1:trace_config_proto_py",
 }
+
+# This maps from the Bazel proto_library target to the C# language binding target for external dependencies.
+EXTERNAL_PROTO_CSHARP_BAZEL_DEP_MAP = {
+    "@com_google_googleapis//google/api/expr/v1alpha1:checked_proto": "@com_google_googleapis//google/api/expr/v1alpha1:checked_csharp_proto",
+}
+
+# This maps from the Bazel proto_library target to the PHP language binding target for external dependencies.
+EXTERNAL_PROTO_PHP_BAZEL_DEP_MAP = {
+    "@com_google_googleapis//google/api/expr/v1alpha1:checked_proto": "@com_google_googleapis//google/api/expr/v1alpha1:checked_php_proto",
+}
+# This maps from the Bazel proto_library target to the Ruby language binding target for external dependencies.
+EXTERNAL_PROTO_RUBY_BAZEL_DEP_MAP = {
+    "@com_google_googleapis//google/api/expr/v1alpha1:checked_proto": "@com_google_googleapis//google/api/expr/v1alpha1:checked_ruby_proto",
+}

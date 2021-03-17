@@ -20,6 +20,9 @@ def api_dependencies():
         name = "com_envoyproxy_protoc_gen_validate",
     )
     external_http_archive(
+        name = "com_envoyproxy",
+    )
+    external_http_archive(
         name = "com_google_googleapis",
     )
     external_http_archive(
@@ -37,16 +40,19 @@ def api_dependencies():
         name = "rules_proto",
     )
     external_http_archive(
+        name = "rules_proto_grpc",
+    )
+    external_http_archive(
         name = "com_github_openzipkin_zipkinapi",
         build_file_content = ZIPKINAPI_BUILD_CONTENT,
     )
-    external_http_archive(
-        name = "opentelemetry_proto",
-        build_file_content = OPENTELEMETRY_LOGS_BUILD_CONTENT,
-    )
+    # external_http_archive(
+    #     name = "opentelemetry_proto",
+    #     build_file_content = OPENTELEMETRY_LOGS_BUILD_CONTENT,
+    # )
 
 PROMETHEUSMETRICS_BUILD_CONTENT = """
-load("@envoy_api//bazel:api_build_system.bzl", "api_cc_py_proto_library")
+load("@envoy//bazel:api_build_system.bzl", "api_cc_py_proto_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 api_cc_py_proto_library(
@@ -66,7 +72,7 @@ go_proto_library(
 """
 
 OPENCENSUSTRACE_BUILD_CONTENT = """
-load("@envoy_api//bazel:api_build_system.bzl", "api_cc_py_proto_library")
+load("@envoy//bazel:api_build_system.bzl", "api_cc_py_proto_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 api_cc_py_proto_library(
@@ -87,7 +93,7 @@ go_proto_library(
 
 ZIPKINAPI_BUILD_CONTENT = """
 
-load("@envoy_api//bazel:api_build_system.bzl", "api_cc_py_proto_library")
+load("@envoy//bazel:api_build_system.bzl", "api_cc_py_proto_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 api_cc_py_proto_library(

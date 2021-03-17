@@ -10,11 +10,18 @@ load(
     "EXTERNAL_PROTO_CC_BAZEL_DEP_MAP",
     "EXTERNAL_PROTO_GO_BAZEL_DEP_MAP",
     "EXTERNAL_PROTO_PY_BAZEL_DEP_MAP",
+    "EXTERNAL_PROTO_CSHARP_BAZEL_DEP_MAP",
+    "EXTERNAL_PROTO_PHP_BAZEL_DEP_MAP",
+    "EXTERNAL_PROTO_RUBY_BAZEL_DEP_MAP",
 )
 
 _PY_PROTO_SUFFIX = "_py_proto"
 _CC_PROTO_SUFFIX = "_cc_proto"
 _CC_GRPC_SUFFIX = "_cc_grpc"
+_TS_PROTO_SUFFIX = "_ts_proto"
+_CSHARP_PROTO_SUFFIX = "_cs_proto"
+_PHP_PROTO_SUFFIX = "_php_proto"
+_RUBY_PROTO_SUFFIX = "_ruby_proto"
 _GO_PROTO_SUFFIX = "_go_proto"
 _GO_IMPORTPATH_PREFIX = "github.com/envoyproxy/go-control-plane/"
 
@@ -48,6 +55,15 @@ def _cc_proto_mapping(dep):
 
 def _py_proto_mapping(dep):
     return _proto_mapping(dep, EXTERNAL_PROTO_PY_BAZEL_DEP_MAP, _PY_PROTO_SUFFIX)
+
+def _csharp_proto_mapping(dep):
+    return _proto_mapping(dep, EXTERNAL_PROTO_CSHARP_BAZEL_DEP_MAP, _CSHARP_PROTO_SUFFIX)
+
+def _php_proto_mapping(dep):
+    return _proto_mapping(dep, EXTERNAL_PROTO_PHP_BAZEL_DEP_MAP, _PHP_PROTO_SUFFIX)
+
+def _ruby_proto_mapping(dep):
+    return _proto_mapping(dep, EXTERNAL_PROTO_RUBY_BAZEL_DEP_MAP, _RUBY_PROTO_SUFFIX)
 
 # TODO(htuch): Convert this to native py_proto_library once
 # https://github.com/bazelbuild/bazel/issues/3935 and/or
@@ -172,9 +188,9 @@ def api_proto_package(
         has_services = has_services,
     )
 
-    compilers = ["@io_bazel_rules_go//proto:go_proto", "@envoy_api//bazel:pgv_plugin_go"]
+    compilers = ["@io_bazel_rules_go//proto:go_proto", "@envoy//bazel:pgv_plugin_go"]
     if has_services:
-        compilers = ["@io_bazel_rules_go//proto:go_grpc", "@envoy_api//bazel:pgv_plugin_go"]
+        compilers = ["@io_bazel_rules_go//proto:go_grpc", "@envoy//bazel:pgv_plugin_go"]
 
     # Because RBAC proro depends on googleapis syntax.proto and checked.proto,
     # which share the same go proto library, it causes duplicative dependencies.
